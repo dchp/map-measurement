@@ -1,6 +1,6 @@
 {
   "name": "map_measurement",
-  "homepage": "https://github.com/dchp/map-measurement",
+  "homepage": "https://dchp.github.io/map-measurement",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
