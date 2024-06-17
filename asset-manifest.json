@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/dchp/map-measurement/static/css/main.4730e2ae.css",
+    "main.js": "/dchp/map-measurement/static/js/main.b82abbc0.js",
+    "static/media/bootstrap-icons.woff?": "/dchp/map-measurement/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
+    "static/media/bootstrap-icons.woff2?": "/dchp/map-measurement/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
+    "index.html": "/dchp/map-measurement/index.html",
+    "main.4730e2ae.css.map": "/dchp/map-measurement/static/css/main.4730e2ae.css.map",
+    "main.b82abbc0.js.map": "/dchp/map-measurement/static/js/main.b82abbc0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4730e2ae.css",
+    "static/js/main.b82abbc0.js"
+  ]
+}
