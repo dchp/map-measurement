@@ -1,0 +1,131 @@
+#map {
+  width: calc(100vw - 600px);
+  height: 100vh;
+}
+
+.map-panel {
+  width: 600px;
+  padding: 30px 40px;
+}
+
+.map-panel {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.map-panel div.measure-table {
+  overflow: auto;
+  flex-grow: 1;
+  margin-bottom: 90px;
+}
+
+.map-panel div.measure-table table th {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+}
+
+.map-panel table th {
+  font-weight: 500;
+}
+
+.map-panel table th,
+.map-panel table td {
+  text-align: center;
+  padding: 10px;
+}
+
+.map-panel table tr.hovered-row td,
+.map-panel .measure.start-point:hover {
+  background-color: #e8e9ea;
+}
+
+.map-panel table td.end-point {
+  width: 130px;
+}
+
+.map-panel table td.end-point input,
+.map-panel .measure.start-point input {
+  width: 80px;
+  margin-right: 3px;
+}
+
+.map-panel table td.end-point input:first-of-type {
+  margin-bottom: 4px;
+}
+
+.map-panel .measure.start-point input:last-of-type {
+  margin-left: 6px;
+}
+
+.map-panel table td:last-child {
+  padding-left: 0;
+  padding-right: 0;
+  width: 70px;
+}
+
+.map-panel div.total {
+  position: absolute;
+  bottom: 60px;
+  height: 50px;
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+}
+
+.map-panel div.total .measure {
+  min-width: 260px;
+  text-align: center;
+  height: 90px;
+  padding: 15px;
+}
+
+.map-panel div.total .measure .name {
+  margin-bottom: 5px;
+}
+
+.map-panel div.total .measure .value {
+  font-weight: 600;
+  font-size: larger;
+}
+
+.map-panel div.total .measure.start-point .value span.editing {
+  position: absolute;
+  left: 20px;
+  font-weight: normal;
+  font-size: medium;
+}
+
+.map-panel table .edit-buttons,
+.map-panel .measure.start-point .edit-buttons {
+  display: none;
+}
+
+.map-panel table tr:hover .edit-buttons,
+.map-panel .measure.start-point:hover .edit-buttons {
+  display: inline-block;
+}
+
+.map-panel .measure.start-point {
+  position: relative;
+}
+
+.map-panel .measure.start-point:hover .edit-buttons {
+  position: absolute;
+  right: 10px;
+}
+
+.btn-toolbar {
+  margin: 20px 0;
+}
+
+.btn-toolbar button {
+  padding: 10px 20px;
+}
+
+.btn-toolbar button i.bi {
+  padding-right: 10px;
+}
