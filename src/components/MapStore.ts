@@ -3,9 +3,12 @@ import { Coordinate } from "ol/coordinate";
 import { Sector } from "./Sector";
 
 class MapStore {
-  isEditing = false;
   sectors: Sector[] = [];
+  hoverSectorId = "";
+  editSectorId = "";
   startPoint: Coordinate | undefined;
+  isEditing = false;
+  isDraggedByPoint = false;
 
   get endPoint(): Coordinate | undefined {
     if (this.lastSector) {
@@ -14,8 +17,8 @@ class MapStore {
     return this.startPoint;
   }
 
-  constructor() {
-    makeAutoObservable(this);
+  get isHoverActive(): boolean {
+    return !this.isDraggedByPoint && !this.isEditing;
   }
 
   get lastSector() {
@@ -24,15 +27,21 @@ class MapStore {
       : undefined;
   }
 
-  addPoint(point: Coordinate) {
-    if (!this.startPoint) {
-      this.startPoint = point;
-      mapStore.isEditing = true;
-      return;
-    }
+  constructor() {
+    makeAutoObservable(this);
+  }
 
-    this.addSector(this.endPoint!, point, this.lastSector);
-    mapStore.isEditing = true;
+  addPoint(point: Coordinate) {
+    runInAction(() => {
+      if (!this.startPoint) {
+        this.startPoint = point;
+        mapStore.isEditing = true;
+        return;
+      }
+
+      this.addSector(this.endPoint!, point, this.lastSector);
+      mapStore.isEditing = true;
+    });
   }
 
   setStartPoint(point: Coordinate) {
@@ -85,9 +94,11 @@ class MapStore {
   }
 
   clean() {
-    this.isEditing = false;
-    this.sectors = [];
-    this.startPoint = undefined;
+    runInAction(() => {
+      this.isEditing = false;
+      this.sectors = [];
+      this.startPoint = undefined;
+    });
   }
 }
 

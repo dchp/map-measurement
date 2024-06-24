@@ -4,19 +4,17 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { RCircle, RFill, RStroke } from "rlayers/style";
 import { Point } from "ol/geom";
-import { mapStore } from "./MapStore";
 import { observer } from "mobx-react-lite";
 import { runInAction } from "mobx";
 import "./MapPath.css";
 import { stopPropagation } from "ol/events/Event";
+import { mapStore } from "./MapStore";
 
 const StartPoint = observer(
   ({
     setWillBeClickHandled,
-    setIsDraggedByPoint,
   }: {
     setWillBeClickHandled: React.Dispatch<React.SetStateAction<boolean>>;
-    setIsDraggedByPoint: React.Dispatch<React.SetStateAction<boolean>>;
   }) => {
     return (
       <>
@@ -49,12 +47,12 @@ const StartPoint = observer(
 
                 runInAction(() => {
                   setWillBeClickHandled(true);
-                  setIsDraggedByPoint(true);
+                  mapStore.isDraggedByPoint = true;
                   mapStore.setStartPoint(e.map.getCoordinateFromPixel(e.pixel));
                 });
               }}
               onPointerDragEnd={() => {
-                setIsDraggedByPoint(false);
+                mapStore.isDraggedByPoint = false;
               }}
             />
           </RLayerVector>

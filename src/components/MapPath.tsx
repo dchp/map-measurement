@@ -6,59 +6,48 @@ import { RCircle, RFill, RStroke } from "rlayers/style";
 import { LineString, Point } from "ol/geom";
 import { mapStore } from "./MapStore";
 import { Coordinate } from "ol/coordinate";
-import { useState } from "react";
-import { MapSegment } from "./MapSegment";
+import { MapSector } from "./MapSector";
 import { observer } from "mobx-react-lite";
 import { runInAction } from "mobx";
 import "./MapPath.css";
 import StartPoint from "./StartPoint";
+import { X } from "react-bootstrap-icons";
 
 const MeasurePath = observer(
   ({
-    hoverSectorId,
     plannedPoint,
-    setHoverSectorId,
     stopPropagation,
     setWillBeClickHandled,
   }: {
-    hoverSectorId: string;
     plannedPoint: Coordinate | undefined;
-    setHoverSectorId: React.Dispatch<React.SetStateAction<string>>;
     stopPropagation: (ev: any) => void;
     setWillBeClickHandled: React.Dispatch<React.SetStateAction<boolean>>;
   }) => {
-    const [isDraggedByPoint, setIsDraggedByPoint] = useState(false);
-
     return (
       <>
         <QuitMeasurement />
 
-        <StartPoint
-          setWillBeClickHandled={setWillBeClickHandled}
-          setIsDraggedByPoint={setIsDraggedByPoint}
-        />
+        <StartPoint setWillBeClickHandled={setWillBeClickHandled} />
 
         {mapStore.sectors.length > 0 &&
           mapStore.sectors.map((sector) => {
             const isHoveredSector =
-              !mapStore.isEditing && hoverSectorId === sector.id;
+              !mapStore.isEditing && mapStore.hoverSectorId === sector.id;
 
             return (
-              <MapSegment
+              <MapSector
                 key={sector.id}
                 id={sector.id}
-                isHoveredSector={isHoveredSector}
+                isHoveredSector={isHoveredSector && mapStore.isHoverActive}
                 sector={sector}
-                setHoverSectorId={setHoverSectorId}
                 stopPropagation={stopPropagation}
                 setWillBeClickHandled={setWillBeClickHandled}
-                setIsDraggedByPoint={setIsDraggedByPoint}
               />
             );
           })}
 
-        {!isDraggedByPoint && plannedPoint && mapStore.endPoint && (
-          <MapSegmentPlanned
+        {!mapStore.isDraggedByPoint && plannedPoint && mapStore.endPoint && (
+          <MapSectorPlanned
             startPoint={mapStore.endPoint}
             endPoint={plannedPoint}
           />
@@ -79,14 +68,16 @@ const QuitMeasurement = observer(() => {
         }
         hidden={!mapStore.isEditing}
       >
-        <i className="bi bi-x" />
-        Quit measurement
+        <span className="x-icon">
+          <X />
+        </span>
+        <span>Quit measurement</span>
       </button>
     </RControl.RCustom>
   );
 });
 
-const MapSegmentPlanned = observer(
+const MapSectorPlanned = observer(
   ({
     startPoint,
     endPoint: plannedPoint,

@@ -14,73 +14,64 @@ import MeasurePath from "./MapPath";
 import { runInAction } from "mobx";
 import "./MapPanel.css";
 
-export interface MapProps {
-  hoverSectorId: string;
-  setHoverSectorId: React.Dispatch<React.SetStateAction<string>>;
-  editSectorId: string;
-  setEditSectorId: React.Dispatch<React.SetStateAction<string>>;
-}
+const origin: Coordinate = [17.25, 49.59]; // Olomouc city
+const initial: RView = { center: fromLonLat(origin), zoom: 11 };
 
-export const Map = observer(
-  ({ hoverSectorId, setHoverSectorId }: MapProps & {}): JSX.Element => {
-    const origin: Coordinate = [17.25, 49.59]; // Olomouc city
-    const initial: RView = { center: fromLonLat(origin), zoom: 11 };
-    const [plannedPoint, setPlannedPoint] = useState<Coordinate | undefined>(
-      undefined
-    );
+export const Map = observer((): JSX.Element => {
+  const [plannedPoint, setPlannedPoint] = useState<Coordinate | undefined>(
+    undefined
+  );
 
-    // do not handle click if it will be handled by inner item (RMap onClick is called before inner item onClick)
-    const [willBeClickHandled, setWillBeClickHandled] = useState(false);
+  // do not handle click if it will be handled by inner item (RMap onClick is called before inner item onClick)
+  const [willBeClickHandled, setWillBeClickHandled] = useState(false);
 
-    useEscapeKey(() =>
-      runInAction(() => {
-        mapStore.isEditing = false;
-      })
-    );
+  useEscapeKey(() =>
+    runInAction(() => {
+      mapStore.isEditing = false;
+    })
+  );
 
-    return (
-      <div id="map">
-        <RMap
-          width={"100%"}
-          height={"100%"}
-          noDefaultControls
-          initial={initial}
-          minZoom={3}
-          maxZoom={17}
-          onClick={useCallback(
-            (e: MapBrowserEvent<UIEvent>) => {
-              if (willBeClickHandled) {
-                setWillBeClickHandled(false);
-                return;
-              }
-              const coords = e.map.getCoordinateFromPixel(e.pixel);
-              mapStore.addPoint(coords);
-            },
-            [willBeClickHandled]
-          )}
-          onPointerMove={useCallback((e: MapBrowserEvent<UIEvent>) => {
+  return (
+    <div id="map">
+      <RMap
+        width={"100%"}
+        height={"100%"}
+        noDefaultControls
+        initial={initial}
+        minZoom={3}
+        maxZoom={17}
+        onClick={useCallback(
+          (e: MapBrowserEvent<UIEvent>) => {
+            if (willBeClickHandled) {
+              setWillBeClickHandled(false);
+              return;
+            }
             const coords = e.map.getCoordinateFromPixel(e.pixel);
-            setPlannedPoint(coords);
-          }, [])}
-        >
-          <ROSM />
+            mapStore.addPoint(coords);
+          },
+          [willBeClickHandled]
+        )}
+        // view={[view, setView]} // does not work map move when onPointerMove is set
+        onPointerMove={useCallback((e: MapBrowserEvent<UIEvent>) => {
+          const coords = e.map.getCoordinateFromPixel(e.pixel);
+          setPlannedPoint(coords);
+        }, [])}
+      >
+        <ROSM />
 
-          <MeasurePath
-            hoverSectorId={hoverSectorId}
-            plannedPoint={plannedPoint}
-            setHoverSectorId={setHoverSectorId}
-            stopPropagation={stopPropagation}
-            setWillBeClickHandled={setWillBeClickHandled}
-          />
+        <MeasurePath
+          plannedPoint={plannedPoint}
+          stopPropagation={stopPropagation}
+          setWillBeClickHandled={setWillBeClickHandled}
+        />
 
-          <RControl.RScaleLine />
-          <RControl.RZoom />
-          <RControl.RAttribution />
-        </RMap>
-      </div>
-    );
-  }
-);
+        <RControl.RScaleLine />
+        <RControl.RZoom />
+        <RControl.RAttribution />
+      </RMap>
+    </div>
+  );
+});
 
 function useEscapeKey(callback: () => void) {
   useEffect(() => {

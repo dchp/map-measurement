@@ -4,11 +4,16 @@
   right: 10px;
 }
 
-.quit-measurement button {
-  font-weight: normal;
+.quit-measurement span {
+  vertical-align: middle;
 }
 
 .quit-measurement button {
+  font-weight: normal;
   width: auto;
-  padding: 0 10px 1px 2px;
+  padding: 0 15px 0px 8px;
+}
+
+.x-icon {
+  margin-right: 4px;
 }

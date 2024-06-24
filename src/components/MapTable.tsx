@@ -13,103 +13,105 @@ import { fromLonLat, toLonLat } from "ol/proj";
 import { toRadians } from "ol/math";
 import "./MapTable.css";
 
-export const MeasureTable = observer(
-  ({
-    editSectorId,
-    setEditSectorId,
-    hoverSectorId,
-    setHoverSectorId,
-  }: {
-    editSectorId: string;
-    setEditSectorId: React.Dispatch<React.SetStateAction<string>>;
-    hoverSectorId: string;
-    setHoverSectorId: React.Dispatch<React.SetStateAction<string>>;
-  }): JSX.Element => {
-    if (mapStore.sectors.length === 0) {
-      return <></>;
-    }
-
-    return (
-      <div className="measure-table">
-        <table className="table table-hover">
-          <thead>
-            <tr>
-              <th className="column-id"></th>
-              <th className="column-distance">Distance</th>
-              <th className="column-azimuth">Azimuth</th>
-              <th className="column-angle">Angle</th>
-              <th className="column-endpoint">End point</th>
-              <th className="column-actions"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {mapStore.sectors.map((sector, index) => {
-              const sectorId = sector.id;
-              return (
-                <tr
-                  key={sectorId}
-                  onMouseEnter={() => setHoverSectorId(sectorId)}
-                  onMouseLeave={() => setHoverSectorId("")}
-                  className={hoverSectorId === sectorId ? "hovered-row" : ""}
-                >
-                  <td>{index + 1}.</td>
-                  <td>
-                    <Distance
-                      sector={sector}
-                      isEditing={editSectorId === sectorId}
-                    />
-                  </td>
-                  <td>
-                    <Azimuth
-                      sector={sector}
-                      isEditing={editSectorId === sectorId}
-                    />
-                  </td>
-                  <td>
-                    <Angle
-                      sector={sector}
-                      isEditing={editSectorId === sectorId}
-                    />
-                  </td>
-                  <td className="end-point">
-                    <CoordinatePoint
-                      point={sector.endPoint}
-                      isEditing={editSectorId === sectorId}
-                      onChange={(coordinate: Coordinate) => {
-                        const editedSector = mapStore.sectors.find(
-                          (s) => s.id === sectorId
-                        );
-                        if (!editedSector) {
-                          return;
-                        }
-                        runInAction(() => {
-                          editedSector.endPoint = coordinate;
-
-                          if (editedSector.nextSector) {
-                            editedSector.nextSector.startPoint = coordinate;
-                          }
-                        });
-                      }}
-                    />
-                  </td>
-                  <td>
-                    <EditButtons
-                      isEditing={sector.id === editSectorId}
-                      onEditingChange={(isEditing) =>
-                        setEditSectorId(isEditing ? sectorId : "")
-                      }
-                      onRemove={() => mapStore.removeSector(sectorId)}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    );
+export const MeasureTable = observer((): JSX.Element => {
+  if (mapStore.sectors.length === 0) {
+    return <></>;
   }
-);
+
+  return (
+    <div className="measure-table">
+      <table className="table table-hover">
+        <thead>
+          <tr>
+            <th className="column-id"></th>
+            <th className="column-distance">Distance</th>
+            <th className="column-azimuth">Azimuth</th>
+            <th className="column-angle">Angle</th>
+            <th className="column-endpoint">End point</th>
+            <th className="column-actions"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {mapStore.sectors.map((sector, index) => {
+            const sectorId = sector.id;
+            return (
+              <tr
+                key={sectorId}
+                onMouseEnter={() =>
+                  runInAction(() => {
+                    mapStore.hoverSectorId = sectorId;
+                  })
+                }
+                onMouseLeave={() =>
+                  runInAction(() => {
+                    mapStore.hoverSectorId = "";
+                  })
+                }
+                className={
+                  mapStore.isHoverActive && mapStore.hoverSectorId === sectorId
+                    ? "hovered-row"
+                    : ""
+                }
+              >
+                <td>{index + 1}.</td>
+                <td>
+                  <Distance
+                    sector={sector}
+                    isEditing={mapStore.editSectorId === sectorId}
+                  />
+                </td>
+                <td>
+                  <Azimuth
+                    sector={sector}
+                    isEditing={mapStore.editSectorId === sectorId}
+                  />
+                </td>
+                <td>
+                  <Angle
+                    sector={sector}
+                    isEditing={mapStore.editSectorId === sectorId}
+                  />
+                </td>
+                <td className="end-point">
+                  <CoordinatePoint
+                    point={sector.endPoint}
+                    isEditing={mapStore.editSectorId === sectorId}
+                    onChange={(coordinate: Coordinate) => {
+                      const editedSector = mapStore.sectors.find(
+                        (s) => s.id === sectorId
+                      );
+                      if (!editedSector) {
+                        return;
+                      }
+                      runInAction(() => {
+                        editedSector.endPoint = coordinate;
+
+                        if (editedSector.nextSector) {
+                          editedSector.nextSector.startPoint = coordinate;
+                        }
+                      });
+                    }}
+                  />
+                </td>
+                <td>
+                  <EditButtons
+                    isEditing={sector.id === mapStore.editSectorId}
+                    onEditingChange={(isEditing) =>
+                      runInAction(() => {
+                        mapStore.editSectorId = isEditing ? sectorId : "";
+                      })
+                    }
+                    onRemove={() => mapStore.removeSector(sectorId)}
+                  />
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+});
 
 const Azimuth = observer(
   ({

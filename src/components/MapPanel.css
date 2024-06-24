@@ -6,130 +6,11 @@
 .map-panel {
   width: 650px;
   padding: 30px;
-}
-
-.map-panel {
   display: flex;
   flex-direction: column;
   max-height: 100vh;
   overflow: hidden;
-}
-
-.map-panel div.measure-table {
-  overflow: auto;
-  flex-grow: 1;
-  margin-bottom: 90px;
-}
-
-.map-panel div.measure-table table th {
-  position: sticky;
-  top: 0;
-  background: white;
-  z-index: 10;
-}
-
-.map-panel table th {
-  font-weight: 500;
-}
-
-.map-panel table th,
-.map-panel table td {
-  text-align: center;
-  padding: 10px;
-}
-
-.map-panel table tr.hovered-row td,
-.map-panel .start-point:hover {
-  background-color: #e8e9ea;
-}
-
-.map-panel .end-point {
-  width: 130px;
-}
-
-.map-panel .end-point input,
-.map-panel .start-point input {
-  width: 80px;
-  margin-right: 3px;
-}
-
-.map-panel .azimuth input {
-  width: 55px;
-  margin-right: 3px;
-}
-
-.map-panel .distance {
-  min-width: 500px;
-}
-
-.map-panel .distance input {
-  width: 80px;
-  margin-right: 3px;
-}
-
-.map-panel .end-point input:first-of-type {
-  margin-bottom: 4px;
-}
-
-.map-panel .start-point input:last-of-type {
-  margin-left: 6px;
-}
-
-.map-panel table td:last-child {
-  padding-left: 0;
-  padding-right: 0;
-  width: 70px;
-}
-
-.map-panel div.total {
-  position: absolute;
-  bottom: 60px;
-  height: 50px;
-  width: 300px;
-  display: flex;
-  flex-direction: row;
-}
-
-.map-panel div.total .measure {
-  min-width: 260px;
-  text-align: center;
-  height: 90px;
-  padding: 15px;
-}
-
-.map-panel div.total .measure .name {
-  margin-bottom: 5px;
-}
-
-.map-panel div.total .measure .value {
-  font-weight: 600;
-  font-size: larger;
-}
-
-.map-panel div.total .start-point .value span.editing {
-  position: absolute;
-  left: 20px;
-  font-weight: normal;
-  font-size: medium;
-}
-
-.map-panel .edit-buttons,
-.map-panel .start-point .edit-buttons {
-  display: none;
-}
-
-.map-panel tr:hover .edit-buttons,
-.map-panel .start-point:hover .edit-buttons {
-  display: inline-block;
-}
-
-.map-panel .start-point {
   position: relative;
-}
-
-.map-panel .start-point:hover .edit-buttons {
-  position: absolute;
-  right: 10px;
 }
 
 .btn-toolbar {
@@ -140,6 +21,27 @@
   padding: 10px 20px;
 }
 
-.btn-toolbar button i.bi {
+.icon {
   padding-right: 10px;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 260px;
+}
+
+.form-group label {
+  width: 230px;
+  vertical-align: middle;
+  margin-bottom: 0;
+}
+
+.dropdown .text {
+  margin-right: 3px;
+}
+
+select {
+  cursor: pointer;
 }
