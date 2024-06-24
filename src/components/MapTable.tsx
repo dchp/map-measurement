@@ -7,6 +7,11 @@ import { EditButtons } from "./EditButtons";
 import { mapStore } from "./MapStore";
 import { observer } from "mobx-react-lite";
 import { runInAction } from "mobx";
+import { Sector } from "./Sector";
+import { offset } from "ol/sphere";
+import { fromLonLat, toLonLat } from "ol/proj";
+import { toRadians } from "ol/math";
+import "./MapTable.css";
 
 export const MeasureTable = observer(
   ({
@@ -20,8 +25,6 @@ export const MeasureTable = observer(
     hoverSectorId: string;
     setHoverSectorId: React.Dispatch<React.SetStateAction<string>>;
   }): JSX.Element => {
-    const headerNames = ["", "Distance", "Azimuth", "Angle", "End point", ""];
-
     if (mapStore.sectors.length === 0) {
       return <></>;
     }
@@ -31,11 +34,12 @@ export const MeasureTable = observer(
         <table className="table table-hover">
           <thead>
             <tr>
-              {headerNames.map((name, index) => (
-                <th scope="col" key={index}>
-                  {name}
-                </th>
-              ))}
+              <th className="column-id"></th>
+              <th className="column-distance">Distance</th>
+              <th className="column-azimuth">Azimuth</th>
+              <th className="column-angle">Angle</th>
+              <th className="column-endpoint">End point</th>
+              <th className="column-actions"></th>
             </tr>
           </thead>
           <tbody>
@@ -49,10 +53,23 @@ export const MeasureTable = observer(
                   className={hoverSectorId === sectorId ? "hovered-row" : ""}
                 >
                   <td>{index + 1}.</td>
-                  <td>{sector.distanceInKm.toFixed(2)} km</td>
-                  <td>{sector.azimuthInDeg.toFixed(0)}°</td>
                   <td>
-                    {sector.angleBetweenPrevious?.toFixed(0).concat("°") ?? "–"}
+                    <Distance
+                      sector={sector}
+                      isEditing={editSectorId === sectorId}
+                    />
+                  </td>
+                  <td>
+                    <Azimuth
+                      sector={sector}
+                      isEditing={editSectorId === sectorId}
+                    />
+                  </td>
+                  <td>
+                    <Angle
+                      sector={sector}
+                      isEditing={editSectorId === sectorId}
+                    />
                   </td>
                   <td className="end-point">
                     <CoordinatePoint
@@ -93,3 +110,94 @@ export const MeasureTable = observer(
     );
   }
 );
+
+const Azimuth = observer(
+  ({
+    sector,
+    isEditing,
+  }: {
+    sector: Sector;
+    isEditing: boolean;
+  }): JSX.Element => {
+    return (
+      <span className="azimuth">
+        {isEditing ? (
+          <input
+            type="number"
+            value={sector.azimuthInDeg.toFixed(0)}
+            onChange={(e) => {
+              const coordinate = offset(
+                toLonLat(sector.startPoint),
+                sector.distanceInKm * 1000,
+                toRadians(parseFloat(e.target.value))
+              );
+
+              runInAction(() => {
+                sector.endPoint = fromLonLat(coordinate);
+
+                if (sector.nextSector) {
+                  sector.nextSector.startPoint = fromLonLat(coordinate);
+                }
+              });
+            }}
+          />
+        ) : (
+          <>{sector.azimuthInDeg.toFixed(0)}</>
+        )}
+        °
+      </span>
+    );
+  }
+);
+
+const Distance = observer(
+  ({
+    sector,
+    isEditing,
+  }: {
+    sector: Sector;
+    isEditing: boolean;
+  }): JSX.Element => {
+    return (
+      <span className="distance">
+        {isEditing ? (
+          <input
+            type="number"
+            value={sector.distanceInKm.toFixed(2)}
+            onChange={(e) => {
+              const coordinate = offset(
+                toLonLat(sector.startPoint),
+                parseFloat(e.target.value) * 1000,
+                toRadians(sector.azimuthInDeg)
+              );
+
+              runInAction(() => {
+                sector.endPoint = fromLonLat(coordinate);
+
+                if (sector.nextSector) {
+                  sector.nextSector.startPoint = fromLonLat(coordinate);
+                }
+              });
+            }}
+          />
+        ) : (
+          <>{sector.distanceInKm.toFixed(2)} </>
+        )}
+        km
+      </span>
+    );
+  }
+);
+
+const Angle = ({
+  sector,
+}: {
+  sector: Sector;
+  isEditing: boolean;
+}): JSX.Element => {
+  return (
+    <span className="angle">
+      {sector.angleBetweenPrevious?.toFixed(0).concat("°") ?? "–"}
+    </span>
+  );
+};

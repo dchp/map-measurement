@@ -26,25 +26,20 @@ export class Sector {
   }
 
   get azimuthInDeg() {
-    if (!this.startPoint || !this.endPoint) {
-      return 0;
-    }
     return getAzimuthInDeg(toLonLat(this.startPoint), toLonLat(this.endPoint));
   }
 
   get distanceInKm() {
-    if (!this.startPoint || !this.endPoint) {
-      return 0;
-    }
-    return getDistance(toLonLat(this.startPoint), toLonLat(this.endPoint));
+    return (
+      getDistance(toLonLat(this.startPoint), toLonLat(this.endPoint)) / 1000
+    );
   }
 
   get angleBetweenPrevious() {
-    if (!this.previousSector || !this.startPoint || !this.endPoint)
-      return undefined;
+    if (!this.previousSector) return undefined;
 
     return getLinesAngleInDeg(
-      [this.previousSector.startPoint!, this.previousSector.endPoint!],
+      [this.previousSector.startPoint, this.previousSector.endPoint],
       [this.startPoint, this.endPoint]
     );
   }

@@ -1,15 +1,18 @@
-import LatLonSpherical from "geodesy/latlon-spherical";
 import { Coordinate } from "ol/coordinate";
+import { toDegrees, toRadians } from "ol/math";
 import { toLonLat } from "ol/proj";
 
 export function getAzimuthInDeg(start: Coordinate, end: Coordinate): number {
-  const [startLon, startLat] = toLonLat(start);
-  const [endLon, endLat] = toLonLat(end);
+  const distanceLon = toRadians(end[0]) - toRadians(start[0]);
+  const startLatRad = toRadians(start[1]);
+  const endLatRad = toRadians(end[1]);
+  const y = Math.sin(distanceLon) * Math.cos(endLatRad);
+  const x =
+    Math.cos(startLatRad) * Math.sin(endLatRad) -
+    Math.sin(startLatRad) * Math.cos(endLatRad) * Math.cos(distanceLon);
+  const azimuthDeg = toDegrees(Math.atan2(y, x));
 
-  const point1 = new LatLonSpherical(startLat, startLon);
-  const point2 = new LatLonSpherical(endLat, endLon);
-
-  return point1.initialBearingTo(point2);
+  return azimuthDeg < 0 ? azimuthDeg + 360 : azimuthDeg;
 }
 
 export function getLinesAngleInDeg(

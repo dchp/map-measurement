@@ -1,11 +1,11 @@
 #map {
-  width: calc(100vw - 600px);
+  width: calc(100vw - 650px);
   height: 100vh;
 }
 
 .map-panel {
-  width: 600px;
-  padding: 30px 40px;
+  width: 650px;
+  padding: 30px;
 }
 
 .map-panel {
@@ -39,25 +39,39 @@
 }
 
 .map-panel table tr.hovered-row td,
-.map-panel .measure.start-point:hover {
+.map-panel .start-point:hover {
   background-color: #e8e9ea;
 }
 
-.map-panel table td.end-point {
+.map-panel .end-point {
   width: 130px;
 }
 
-.map-panel table td.end-point input,
-.map-panel .measure.start-point input {
+.map-panel .end-point input,
+.map-panel .start-point input {
   width: 80px;
   margin-right: 3px;
 }
 
-.map-panel table td.end-point input:first-of-type {
+.map-panel .azimuth input {
+  width: 55px;
+  margin-right: 3px;
+}
+
+.map-panel .distance {
+  min-width: 500px;
+}
+
+.map-panel .distance input {
+  width: 80px;
+  margin-right: 3px;
+}
+
+.map-panel .end-point input:first-of-type {
   margin-bottom: 4px;
 }
 
-.map-panel .measure.start-point input:last-of-type {
+.map-panel .start-point input:last-of-type {
   margin-left: 6px;
 }
 
@@ -92,28 +106,28 @@
   font-size: larger;
 }
 
-.map-panel div.total .measure.start-point .value span.editing {
+.map-panel div.total .start-point .value span.editing {
   position: absolute;
   left: 20px;
   font-weight: normal;
   font-size: medium;
 }
 
-.map-panel table .edit-buttons,
-.map-panel .measure.start-point .edit-buttons {
+.map-panel .edit-buttons,
+.map-panel .start-point .edit-buttons {
   display: none;
 }
 
-.map-panel table tr:hover .edit-buttons,
-.map-panel .measure.start-point:hover .edit-buttons {
+.map-panel tr:hover .edit-buttons,
+.map-panel .start-point:hover .edit-buttons {
   display: inline-block;
 }
 
-.map-panel .measure.start-point {
+.map-panel .start-point {
   position: relative;
 }
 
-.map-panel .measure.start-point:hover .edit-buttons {
+.map-panel .start-point:hover .edit-buttons {
   position: absolute;
   right: 10px;
 }

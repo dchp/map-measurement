@@ -1,0 +1,20 @@
+.column-id {
+  width: 50px;
+}
+
+.column-distance {
+  width: 120px;
+}
+
+.column-azimuth,
+.column-angle {
+  width: 90px;
+}
+
+.column-endpoint {
+  width: 145px;
+}
+
+.column-actions {
+  width: 60px;
+}
