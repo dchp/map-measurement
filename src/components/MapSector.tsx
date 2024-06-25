@@ -1,13 +1,11 @@
 import { RFeature, RLayerVector, RStyle } from "rlayers";
-import "ol/ol.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { RCircle, RFill, RStroke } from "rlayers/style";
 import { LineString, Point } from "ol/geom";
-import { mapStore } from "./MapStore";
-import { Sector } from "./Sector";
+import mapStore from "./MapStore";
+import Sector from "./Sector";
 import { observer } from "mobx-react-lite";
 import { runInAction } from "mobx";
+import { stopPropagation } from "ol/events/Event";
 
 const hoveredColor = "red";
 const unhoveredColor = "black";
@@ -17,13 +15,11 @@ export const MapSector = observer(
     isHoveredSector,
     sector,
     id,
-    stopPropagation,
     setWillBeClickHandled,
   }: {
     isHoveredSector: boolean;
     sector: Sector;
     id: string;
-    stopPropagation: (ev: any) => void;
     setWillBeClickHandled: React.Dispatch<React.SetStateAction<boolean>>;
   }) => {
     return (

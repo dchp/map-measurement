@@ -1,23 +1,20 @@
-import { RControl, RMap, ROSM } from "rlayers";
-import "ol/ol.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { MapBrowserEvent } from "ol";
-import { useCallback, useEffect, useState } from "react";
-import { Coordinate } from "ol/coordinate";
-import { stopPropagation } from "ol/events/Event";
-import { RView } from "rlayers/RMap";
-import { fromLonLat } from "ol/proj";
-import { observer } from "mobx-react-lite";
-import { mapStore } from "./MapStore";
-import MeasurePath from "./MapPath";
-import { runInAction } from "mobx";
 import "./MapPanel.css";
 
-const origin: Coordinate = [17.25, 49.59]; // Olomouc city
-const initial: RView = { center: fromLonLat(origin), zoom: 11 };
+import { RControl, RMap, ROSM } from "rlayers";
+import { MapBrowserEvent } from "ol";
+import { Coordinate } from "ol/coordinate";
+import { fromLonLat } from "ol/proj";
+import { useCallback, useEffect, useState } from "react";
+import { RView } from "rlayers/RMap";
+import { observer } from "mobx-react-lite";
+import mapStore from "./MapStore";
+import MeasurePath from "./MapPath";
+import { runInAction } from "mobx";
 
-export const Map = observer((): JSX.Element => {
+const origin: Coordinate = [16.6, 49.21];
+const initial: RView = { center: fromLonLat(origin), zoom: 12 };
+
+const Map = observer((): JSX.Element => {
   const [plannedPoint, setPlannedPoint] = useState<Coordinate | undefined>(
     undefined
   );
@@ -34,12 +31,12 @@ export const Map = observer((): JSX.Element => {
   return (
     <div id="map">
       <RMap
-        width={"100%"}
-        height={"100%"}
         noDefaultControls
         initial={initial}
-        minZoom={3}
+        minZoom={5}
         maxZoom={17}
+        width={"100%"}
+        height={"100%"}
         onClick={useCallback(
           (e: MapBrowserEvent<UIEvent>) => {
             if (willBeClickHandled) {
@@ -61,7 +58,6 @@ export const Map = observer((): JSX.Element => {
 
         <MeasurePath
           plannedPoint={plannedPoint}
-          stopPropagation={stopPropagation}
           setWillBeClickHandled={setWillBeClickHandled}
         />
 
@@ -88,3 +84,5 @@ function useEscapeKey(callback: () => void) {
     };
   }, [callback]);
 }
+
+export default Map;

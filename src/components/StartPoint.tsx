@@ -1,14 +1,11 @@
+import "./MapPath.css";
 import { RFeature, RLayerVector, RStyle } from "rlayers";
-import "ol/ol.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { RCircle, RFill, RStroke } from "rlayers/style";
 import { Point } from "ol/geom";
 import { observer } from "mobx-react-lite";
 import { runInAction } from "mobx";
-import "./MapPath.css";
 import { stopPropagation } from "ol/events/Event";
-import { mapStore } from "./MapStore";
+import mapStore from "./MapStore";
 
 const StartPoint = observer(
   ({
@@ -52,7 +49,9 @@ const StartPoint = observer(
                 });
               }}
               onPointerDragEnd={() => {
-                mapStore.isDraggedByPoint = false;
+                runInAction(() => {
+                  mapStore.isDraggedByPoint = false;
+                });
               }}
             />
           </RLayerVector>

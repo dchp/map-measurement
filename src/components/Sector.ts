@@ -2,9 +2,18 @@ import { makeAutoObservable } from "mobx";
 import { Coordinate } from "ol/coordinate";
 import { toLonLat } from "ol/proj";
 import { getDistance } from "ol/sphere";
-import { getAzimuthInDeg, getLinesAngleInDeg } from "../utils/geometry";
+import { toRadians } from "ol/math";
+import {
+  convertKmToMiles,
+  getAzimuthInDeg,
+  getLinesAngleInDeg,
+} from "../utils/geometry";
+import { unitSettingStore } from "./UnitSettingStore";
+import MeasuredValue from "../types/MeasureValue";
+import LengthUnit from "../types/LengthUnit";
+import AngleUnit from "../types/AngleUnit";
 
-export class Sector {
+class Sector {
   id: string;
   startPoint: Coordinate;
   endPoint: Coordinate;
@@ -25,8 +34,17 @@ export class Sector {
     makeAutoObservable(this);
   }
 
-  get azimuthInDeg() {
+  get azimuthInDeg(): number {
     return getAzimuthInDeg(toLonLat(this.startPoint), toLonLat(this.endPoint));
+  }
+
+  get azimuth(): MeasuredValue {
+    return new MeasuredValue(
+      unitSettingStore.angleUnit === AngleUnit.Degrees
+        ? this.azimuthInDeg
+        : toRadians(this.azimuthInDeg),
+      unitSettingStore.angleUnit
+    );
   }
 
   get distanceInKm() {
@@ -35,12 +53,34 @@ export class Sector {
     );
   }
 
-  get angleBetweenPrevious() {
+  get distanceInMi() {
+    return convertKmToMiles(this.distanceInKm);
+  }
+
+  get distance(): MeasuredValue {
+    return new MeasuredValue(
+      unitSettingStore.lengthUnit === LengthUnit.Kilometers
+        ? this.distanceInKm
+        : this.distanceInMi,
+      unitSettingStore.lengthUnit
+    );
+  }
+
+  get angleBetweenPrevious(): MeasuredValue | undefined {
     if (!this.previousSector) return undefined;
 
-    return getLinesAngleInDeg(
+    const angleInDeg = getLinesAngleInDeg(
       [this.previousSector.startPoint, this.previousSector.endPoint],
       [this.startPoint, this.endPoint]
     );
+
+    return new MeasuredValue(
+      unitSettingStore.angleUnit === AngleUnit.Degrees
+        ? angleInDeg
+        : toRadians(angleInDeg),
+      unitSettingStore.angleUnit
+    );
   }
 }
+
+export default Sector;

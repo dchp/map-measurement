@@ -1,6 +1,10 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { Coordinate } from "ol/coordinate";
-import { Sector } from "./Sector";
+import Sector from "./Sector";
+import { unitSettingStore } from "./UnitSettingStore";
+import { convertKmToMiles } from "../utils/geometry";
+import MeasuredValue from "../types/MeasureValue";
+import LengthUnit from "../types/LengthUnit";
 
 class MapStore {
   sectors: Sector[] = [];
@@ -25,6 +29,20 @@ class MapStore {
     return this.sectors.length >= 1
       ? this.sectors[this.sectors.length - 1]
       : undefined;
+  }
+
+  get totalDistance(): MeasuredValue {
+    const totalDistanceInKm = this.sectors.reduce(
+      (sum, sector) => sum + sector.distanceInKm,
+      0
+    );
+
+    return new MeasuredValue(
+      unitSettingStore.lengthUnit === LengthUnit.Kilometers
+        ? totalDistanceInKm
+        : convertKmToMiles(totalDistanceInKm),
+      unitSettingStore.lengthUnit
+    );
   }
 
   constructor() {
@@ -102,4 +120,6 @@ class MapStore {
   }
 }
 
-export const mapStore = new MapStore();
+const mapStore = new MapStore();
+
+export default mapStore;

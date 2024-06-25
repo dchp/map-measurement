@@ -1,12 +1,9 @@
 import { fromLonLat, toLonLat } from "ol/proj";
-import "ol/ol.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { toGPSString } from "../utils/geometry";
 import { Coordinate } from "ol/coordinate";
+import { toGPSString } from "../utils/geometry";
 import { observer } from "mobx-react-lite";
 
-export const CoordinatePoint = observer(
+const CoordinatePoint = observer(
   ({
     point,
     isEditing,
@@ -45,7 +42,7 @@ const Latitude = observer(
           max="90"
           onChange={(e) => {
             let value = parseFloat(e.target.value);
-            value = value > 90 ? 90 : value < 0 ? 0 : value;
+            value = !value || value > 90 || value < 0 ? 0 : value;
             onChange(fromLonLat([point ? toLonLat(point)[0] : 0, value]));
           }}
         />
@@ -73,7 +70,7 @@ const Longitude = observer(
           max="180"
           onChange={(e) => {
             let value = parseFloat(e.target.value);
-            value = value > 180 ? 180 : value < 0 ? 0 : value;
+            value = !value || value > 180 || value < 0 ? 0 : value;
             onChange(fromLonLat([value, point ? toLonLat(point)[1] : 0]));
           }}
         />
@@ -82,3 +79,5 @@ const Longitude = observer(
     );
   }
 );
+
+export default CoordinatePoint;

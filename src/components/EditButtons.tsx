@@ -1,9 +1,10 @@
-import { Coordinate } from "ol/coordinate";
 import "./EditButtons.css";
+
+import { Coordinate } from "ol/coordinate";
 import { fromLonLat } from "ol/proj";
 import { Pencil, Check2, GeoAlt, Trash3 } from "react-bootstrap-icons";
 
-export function EditButtons({
+function EditButtons({
   isEditing,
   onEditingChange,
   onRemove,
@@ -56,3 +57,5 @@ export function EditButtons({
     </div>
   );
 }
+
+export default EditButtons;

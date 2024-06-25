@@ -1,14 +1,6 @@
 import { makeAutoObservable } from "mobx";
-
-export enum LengthUnit {
-  Kilometers = "km",
-  Miles = "mi",
-}
-
-export enum AngleUnit {
-  Degrees = "°",
-  Radians = "rad",
-}
+import LengthUnit from "../types/LengthUnit";
+import AngleUnit from "../types/AngleUnit";
 
 class UnitSettingStore {
   lengthUnit = LengthUnit.Kilometers;

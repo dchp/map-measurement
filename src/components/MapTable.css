@@ -7,10 +7,13 @@ input {
 }
 
 .column-distance {
-  width: 120px;
+  width: 125px;
 }
 
-.column-azimuth,
+.column-azimuth {
+  width: 100px;
+}
+
 .column-angle {
   width: 90px;
 }

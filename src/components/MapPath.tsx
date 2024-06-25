@@ -1,26 +1,21 @@
+import "./MapPath.css";
 import { RControl, RFeature, RLayerVector, RStyle } from "rlayers";
-import "ol/ol.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { RCircle, RFill, RStroke } from "rlayers/style";
 import { LineString, Point } from "ol/geom";
-import { mapStore } from "./MapStore";
+import mapStore from "./MapStore";
 import { Coordinate } from "ol/coordinate";
 import { MapSector } from "./MapSector";
 import { observer } from "mobx-react-lite";
 import { runInAction } from "mobx";
-import "./MapPath.css";
 import StartPoint from "./StartPoint";
 import { X } from "react-bootstrap-icons";
 
 const MeasurePath = observer(
   ({
     plannedPoint,
-    stopPropagation,
     setWillBeClickHandled,
   }: {
     plannedPoint: Coordinate | undefined;
-    stopPropagation: (ev: any) => void;
     setWillBeClickHandled: React.Dispatch<React.SetStateAction<boolean>>;
   }) => {
     return (
@@ -40,7 +35,6 @@ const MeasurePath = observer(
                 id={sector.id}
                 isHoveredSector={isHoveredSector && mapStore.isHoverActive}
                 sector={sector}
-                stopPropagation={stopPropagation}
                 setWillBeClickHandled={setWillBeClickHandled}
               />
             );

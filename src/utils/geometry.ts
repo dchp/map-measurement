@@ -35,3 +35,7 @@ export function toGPSString(point: Coordinate): string {
 
   return `${lat.toFixed(2)}N ${lon.toFixed(2)}E`;
 }
+
+export function convertKmToMiles(km: number): number {
+  return km * 0.621371;
+}

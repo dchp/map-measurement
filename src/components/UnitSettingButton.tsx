@@ -1,13 +1,19 @@
 import { Dropdown, Form } from "react-bootstrap";
 import { Gear } from "react-bootstrap-icons";
-import { AngleUnit, LengthUnit, unitSettingStore } from "./UnitSettingStore";
+import { unitSettingStore } from "./UnitSettingStore";
 import { observer } from "mobx-react-lite";
 import { runInAction } from "mobx";
+import LengthUnit from "../types/LengthUnit";
+import AngleUnit from "../types/AngleUnit";
 
 const UnitSettingsButton = observer(() => {
   return (
     <Dropdown>
-      <Dropdown.Toggle variant="light" id="dropdown-basic">
+      <Dropdown.Toggle
+        variant="light"
+        id="dropdown-basic"
+        className="rounded-0"
+      >
         <span className="icon">
           <Gear />
         </span>
