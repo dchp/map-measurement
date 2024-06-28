@@ -1,14 +1,17 @@
-#map {
-  width: calc(100vw - 650px);
+.map-mesasurement {
+  display: flex;
   height: 100vh;
 }
 
+.map {
+  flex-grow: 1;
+}
+
 .map-panel {
-  width: 650px;
+  width: 600px;
   padding: 30px;
   display: flex;
   flex-direction: column;
-  max-height: 100vh;
   overflow: hidden;
   position: relative;
 }

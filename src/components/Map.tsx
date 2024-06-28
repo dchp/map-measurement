@@ -29,7 +29,7 @@ const Map = observer((): JSX.Element => {
   );
 
   return (
-    <div id="map">
+    <div className="map">
       <RMap
         noDefaultControls
         initial={initial}

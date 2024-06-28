@@ -39,3 +39,7 @@ export function toGPSString(point: Coordinate): string {
 export function convertKmToMiles(km: number): number {
   return km * 0.621371;
 }
+
+export function convertMilesToKm(mi: number): number {
+  return mi / 0.621371;
+}

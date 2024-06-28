@@ -9,6 +9,10 @@ import mapStore from "./MapStore";
 import { observer } from "mobx-react-lite";
 import { runInAction } from "mobx";
 import Sector from "./Sector";
+import { unitSettingStore } from "./UnitSettingStore";
+import LengthUnit from "../types/LengthUnit";
+import { convertMilesToKm } from "../utils/geometry";
+import AngleUnit from "../types/AngleUnit";
 
 const MeasureTable = observer((): JSX.Element => {
   if (mapStore.sectors.length === 0) {
@@ -50,7 +54,7 @@ const MeasureTable = observer((): JSX.Element => {
                     : ""
                 }
               >
-                <td>{index + 1}.</td>
+                <td>{index + 1}</td>
                 <td>
                   <Distance
                     sector={sector}
@@ -132,7 +136,9 @@ const Azimuth = observer(
                 const coordinate = offset(
                   toLonLat(sector.startPoint),
                   sector.distanceInKm * 1000,
-                  toRadians(value)
+                  unitSettingStore.angleUnit === AngleUnit.Radians
+                    ? value
+                    : toRadians(value)
                 );
 
                 runInAction(() => {
@@ -175,7 +181,9 @@ const Distance = observer(
 
                 const coordinate = offset(
                   toLonLat(sector.startPoint),
-                  value * 1000,
+                  unitSettingStore.lengthUnit === LengthUnit.Kilometers
+                    ? value * 1000
+                    : convertMilesToKm(value) * 1000,
                   toRadians(sector.azimuthInDeg)
                 );
 

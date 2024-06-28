@@ -6,7 +6,7 @@ import MeasurePanel from "./components/MapPanel";
 
 const App = () => {
   return (
-    <div style={{ display: "flex" }}>
+    <div className="map-mesasurement">
       <Map />
       <MeasurePanel />
     </div>

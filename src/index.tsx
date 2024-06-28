@@ -7,10 +7,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <div id="fullscreen" className="fullscreen">
-      <div id="root">
-        <App />
-      </div>
-    </div>
+    <App />
   </React.StrictMode>
 );

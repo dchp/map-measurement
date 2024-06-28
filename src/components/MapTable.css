@@ -3,11 +3,11 @@ input {
 }
 
 .column-id {
-  width: 50px;
+  width: 36px;
 }
 
 .column-distance {
-  width: 125px;
+  width: 120px;
 }
 
 .column-azimuth {
@@ -19,7 +19,7 @@ input {
 }
 
 .column-endpoint {
-  width: 145px;
+  width: 115px;
 }
 
 .column-actions {
@@ -33,16 +33,21 @@ input {
 .map-panel table th,
 .map-panel table td {
   text-align: center;
-  padding: 10px;
+  padding: 10px 5px;
+}
+
+.map-panel table th:first-child,
+.map-panel table td:first-child {
+  padding: 10px 0;
+}
+
+.map-panel table td:first-child::after {
+  content: ".";
 }
 
 .map-panel table tr.hovered-row td,
 .map-panel .start-point:hover {
   background-color: #e8e9ea;
-}
-
-.map-panel .end-point {
-  width: 130px;
 }
 
 .map-panel .end-point input,
@@ -76,7 +81,6 @@ input {
 .map-panel table td:last-child {
   padding-left: 0;
   padding-right: 0;
-  width: 70px;
 }
 
 .measure-table {
