@@ -1,0 +1,91 @@
+.measure-table {
+  input {
+    text-align: center;
+  }
+
+  table {
+    thead {
+      .column-id {
+        width: 36px;
+      }
+
+      .column-distance {
+        width: 120px;
+      }
+
+      .column-azimuth {
+        width: 100px;
+      }
+
+      .column-angle {
+        width: 90px;
+      }
+
+      .column-endpoint {
+        width: 115px;
+      }
+
+      .column-actions {
+        width: 60px;
+      }
+
+      th {
+        position: sticky;
+        top: 0;
+        font-weight: 500;
+        text-align: center;
+        padding: 10px 5px;
+      }
+    }
+
+    tbody {
+      tr {
+        .edit-buttons {
+          display: none;
+        }
+
+        &:hover {
+          .edit-buttons {
+            display: inline-block;
+          }
+        }
+
+        &.hovered-row td {
+          background-color: #e8e9ea;
+        }
+      }
+
+      td {
+        text-align: center;
+        padding: 10px 5px;
+
+        &:first-child {
+          padding: 10px 0;
+        }
+
+        &:first-child::after {
+          content: ".";
+        }
+
+        &:last-child {
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        .azimuth {
+          input {
+            width: 55px;
+            margin-right: 3px;
+          }
+        }
+
+        .distance {
+          input {
+            width: 80px;
+            margin-right: 3px;
+          }
+        }
+      }
+    }
+  }
+}

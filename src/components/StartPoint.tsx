@@ -1,4 +1,3 @@
-import "./MapPath.css";
 import { RFeature, RLayerVector, RStyle } from "rlayers";
 import { RCircle, RFill, RStroke } from "rlayers/style";
 import { Point } from "ol/geom";

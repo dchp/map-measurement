@@ -1,10 +1,11 @@
-import "./MapPath.css";
+import "./MapPath.scss";
+
 import { RControl, RFeature, RLayerVector, RStyle } from "rlayers";
 import { RCircle, RFill, RStroke } from "rlayers/style";
 import { LineString, Point } from "ol/geom";
 import mapStore from "./MapStore";
 import { Coordinate } from "ol/coordinate";
-import { MapSector } from "./MapSector";
+import MapSector from "./MapSector";
 import { observer } from "mobx-react-lite";
 import { runInAction } from "mobx";
 import StartPoint from "./StartPoint";

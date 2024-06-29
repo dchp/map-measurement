@@ -1,4 +1,4 @@
-import "./EditButtons.css";
+import "./EditButtons.scss";
 
 import { Coordinate } from "ol/coordinate";
 import { fromLonLat } from "ol/proj";

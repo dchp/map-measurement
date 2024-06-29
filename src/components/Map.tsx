@@ -1,5 +1,3 @@
-import "./MapPanel.css";
-
 import { RControl, RMap, ROSM } from "rlayers";
 import { MapBrowserEvent } from "ol";
 import { Coordinate } from "ol/coordinate";

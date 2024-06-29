@@ -1,0 +1,53 @@
+.total {
+  height: 80px;
+  bottom: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .measure {
+    width: 260px;
+    text-align: center;
+    height: 90px;
+    padding: 15px;
+
+    .name {
+      margin-bottom: 5px;
+    }
+
+    .value {
+      font-weight: 600;
+      font-size: larger;
+
+      span.editing {
+        position: absolute;
+        left: 20px;
+        font-weight: normal;
+        font-size: medium;
+      }
+    }
+
+    &.start-point {
+      position: relative;
+      width: 280px;
+
+      .edit-buttons {
+        display: none;
+      }
+
+      input:last-of-type {
+        margin-left: 6px;
+      }
+
+      &:hover {
+        background-color: #e8e9ea;
+
+        .edit-buttons {
+          display: inline-block;
+          position: absolute;
+          right: 10px;
+        }
+      }
+    }
+  }
+}

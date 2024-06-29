@@ -1,25 +1,12 @@
-import "./MapPanel.css";
+import "./MeasureToolbar.scss";
 
 import { observer } from "mobx-react-lite";
 import mapStore from "./MapStore";
-import MeasureTable from "./MapTable";
-import SummaryTable from "./SummaryTable";
 import UnitSettingsButton from "./UnitSettingButton";
 import { Button, ButtonGroup, ButtonToolbar } from "react-bootstrap";
 import { PlusCircle, ArrowClockwise } from "react-bootstrap-icons";
 
-const MeasurePanel = () => {
-  return (
-    <div className="map-panel">
-      <h2>Measurement</h2>
-      <ActionsToolbar />
-      <MeasureTable />
-      <SummaryTable />
-    </div>
-  );
-};
-
-const ActionsToolbar = observer(() => {
+const MeasureToolbar = observer(() => {
   return (
     <ButtonToolbar>
       <ButtonGroup>
@@ -55,4 +42,4 @@ const ActionsToolbar = observer(() => {
   );
 });
 
-export default MeasurePanel;
+export default MeasureToolbar;

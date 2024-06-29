@@ -10,7 +10,7 @@ import { stopPropagation } from "ol/events/Event";
 const hoveredColor = "red";
 const unhoveredColor = "black";
 
-export const MapSector = observer(
+const MapSector = observer(
   ({
     isHoveredSector,
     sector,
@@ -109,3 +109,5 @@ export const MapSector = observer(
     );
   }
 );
+
+export default MapSector;

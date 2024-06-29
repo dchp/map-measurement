@@ -1,4 +1,5 @@
-import "./SummaryTable.css";
+import "./MeasureSummary.scss";
+
 import { observer } from "mobx-react-lite";
 import mapStore from "./MapStore";
 import CoordinatePoint from "./CoordinatePoint";
@@ -6,7 +7,7 @@ import { Coordinate } from "ol/coordinate";
 import { useState } from "react";
 import EditButtons from "./EditButtons";
 
-const SummaryTable = observer(() => {
+const MeasureSummary = observer(() => {
   const [isEditingStartPoint, setIsEditingStartPoint] = useState(false);
 
   return (
@@ -38,4 +39,4 @@ const SummaryTable = observer(() => {
   );
 });
 
-export default SummaryTable;
+export default MeasureSummary;

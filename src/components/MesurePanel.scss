@@ -1,0 +1,16 @@
+.mesure-panel {
+  width: 600px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+
+  .measure-table {
+    flex-grow: 1;
+    overflow-y: scroll;
+    margin-right: -30px;
+    padding-right: 30px;
+  }
+}

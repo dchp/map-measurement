@@ -1,3 +1,5 @@
+import "./CoordinatePoint.scss";
+
 import { fromLonLat, toLonLat } from "ol/proj";
 import { Coordinate } from "ol/coordinate";
 import { toGPSString } from "../utils/geometry";
@@ -33,7 +35,7 @@ const Latitude = observer(
     onChange: (newValue: Coordinate) => void;
   }): JSX.Element => {
     return (
-      <>
+      <span className="latitude">
         <input
           value={point ? toLonLat(point)[1].toFixed(2) : 0}
           type="number"
@@ -47,7 +49,7 @@ const Latitude = observer(
           }}
         />
         N
-      </>
+      </span>
     );
   }
 );
@@ -61,7 +63,7 @@ const Longitude = observer(
     onChange: (newValue: Coordinate) => void;
   }): JSX.Element => {
     return (
-      <>
+      <span className="longitude">
         <input
           value={point ? toLonLat(point)[0].toFixed(2) : 0}
           type="number"
@@ -75,7 +77,7 @@ const Longitude = observer(
           }}
         />
         E
-      </>
+      </span>
     );
   }
 );
