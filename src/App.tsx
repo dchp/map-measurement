@@ -4,13 +4,13 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Map from "./components/Map";
-import MesurePanel from "./components/MesurePanel";
+import MeasurePanel from "./components/MeasurePanel";
 
 const App = () => {
   return (
     <div className="map-mesasurement">
       <Map />
-      <MesurePanel />
+      <MeasurePanel />
     </div>
   );
 };

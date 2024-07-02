@@ -21,7 +21,7 @@ const CoordinatePoint = observer(
         <Longitude point={point} onChange={onChange} />
       </span>
     ) : (
-      <span>{point ? toGPSString(point) : "-"}</span>
+      <span>{point ? toGPSString(point) : "–⁠⁠⁠⁠⁠⁠"}</span>
     );
   }
 );
